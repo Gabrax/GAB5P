@@ -6,6 +6,10 @@ public class Shoot : MonoBehaviour
 {
     public float speed = 5f;
     public float deactivate_Timer = 3f;
+    public GameObject explosion;
+    
+    
+    
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +21,11 @@ public class Shoot : MonoBehaviour
     void Update()
     {
         Move();
+        /*if (transform.position.x >= Screen.width) 
+        {
+            Explode();
+        }*/
+
     }
 
     void Move()
@@ -29,5 +38,19 @@ public class Shoot : MonoBehaviour
     void DeaCtivateGameObject()
     {
         Destroy(gameObject);
+    }
+    void Explode()
+    {
+        // Instantiate the explosion prefab at the bullet's position
+        Instantiate(explosion, transform.position, Quaternion.identity);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+        Debug.Log("collision");
+        GameObject e = Instantiate(explosion) as GameObject;
+        e.transform.position = transform.position;
+        
     }
 }

@@ -173,3 +173,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   deactivate_Timer: 2.8
+  explosion: {fileID: 8800865499661403844, guid: 38649dc80b734bc48983552ae7d620fb, type: 3}

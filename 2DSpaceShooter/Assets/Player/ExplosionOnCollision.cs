@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class ExplosionOnCollision : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject explosion;
+    AudioSource explosion;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Awake()
     {
-        Instantiate(explosion, transform.position, Quaternion.identity);
-        Destroy(collision.gameObject);
-        Destroy(gameObject);
+        explosion = GetComponent<AudioSource>();
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("wall");
+        explosion.Play();
+    }
+
+
 }
