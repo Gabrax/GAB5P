@@ -10,9 +10,10 @@ public class PlayerController : MonoBehaviour
     public float attack_Timer = 0.35f;
     private float currentAttackTimer;
     private bool canAttack;
-    public GameObject flame;
     public AudioSource engine;
     public AudioSource bullet;
+    public GameObject[] gameObjects;
+    private int currentIndex = 0;
 
     [SerializeField]
     private GameObject player_Bullet;
@@ -34,20 +35,20 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             engine.Play();
-            flame.SetActive(true);
+            InvokeRepeating("ActivateGameObject", 0.0f, 0.5f);
         }
         if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            flame.SetActive(false);
+            CancelInvoke("ActivateGameObject");
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             engine.Play();
-            flame.SetActive(true);
+            InvokeRepeating("ActivateGameObject", 0.0f, 0.5f);
         }
         if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            flame.SetActive(false);
+            CancelInvoke("ActivateGameObject");
         }
     }
 
@@ -86,7 +87,7 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Return))  
         {
-                if (canAttack)
+            if(canAttack)
             {
                 bullet.Play();
                 canAttack = false;
@@ -95,5 +96,14 @@ public class PlayerController : MonoBehaviour
             }
                     
         }
+    }
+
+    void ActivateGameObject()
+    {
+        // Activate the current game object
+        gameObjects[currentIndex].SetActive(!gameObjects[currentIndex].activeSelf);
+
+        // Increment the index or reset to 0 if it exceeds the array length
+        currentIndex = (currentIndex + 1) % gameObjects.Length;
     }
 }
