@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TerrainGenerator : MonoBehaviour
 {
@@ -9,15 +11,26 @@ public class TerrainGenerator : MonoBehaviour
     public Color clearingColor = Color.yellow;
 
     // Linear mixed generator parameters
-    private const long m = 1 << 20; // Divisor greater than or equal to 2^20
-    private const long a = 48271;    // Multiplier
-    private float c = ((3 - (Mathf.Sqrt(3)) / 6)) * m; // Step
+    private const long m = 1 << 20; 
+    private const long a = 48271;    
+    private float c = ((3 - (Mathf.Sqrt(3)) / 6)) * m;
 
-    public float seed = 123; // Initial seed
+    public TMP_Text displayText;
+    public TMP_InputField inputField;
+    public float seed = 123; 
 
     void Start()
     {
         GenerateTerrain();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            UpdateVariable();
+            GenerateTerrain();
+        }
     }
 
     void GenerateTerrain()
@@ -28,11 +41,11 @@ public class TerrainGenerator : MonoBehaviour
         {
             for (int y = 0; y < boardSize; y++)
             {
-                seed = (a * seed + c) % m; // Linear mixed generator formula
+                seed = (a * seed + c) % m; 
 
-                float randomValue = (float)seed / m; // Normalize to [0, 1]
+                float randomValue = (float)seed / m; 
 
-                // Map the normalized value to specific ranges
+                
                 if (randomValue < 0.25f)
                     terrainColors[x, y] = waterColor;
                 else if (randomValue < 0.5f)
@@ -42,11 +55,30 @@ public class TerrainGenerator : MonoBehaviour
                 else
                     terrainColors[x, y] = clearingColor;
 
-                // Create a visual representation of the terrain
+                
                 GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Quad);
                 tile.transform.position = new Vector3(x, y, 0);
                 tile.GetComponent<Renderer>().material.color = terrainColors[x, y];
             }
         }
     }
+    public void UpdateVariable()
+    {
+        
+        if (int.TryParse(inputField.text, out int newValue))
+        {
+            seed = newValue;
+            UpdateDisplay();
+        }
+        else
+        {
+            Debug.LogError("Invalid input. Please enter a valid integer.");
+        }
+    }
+    void UpdateDisplay()
+    {
+        displayText.text = "myVariable: " + seed.ToString();
+    }
+
+    
 }
