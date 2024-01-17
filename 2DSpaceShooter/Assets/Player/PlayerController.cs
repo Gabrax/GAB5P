@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private Transform AttackPoint;
+    [SerializeField]
+    private Transform AttackPoint2;
 
     // Start is called before the first frame update
     void Start()
@@ -93,6 +95,7 @@ public class PlayerController : MonoBehaviour
                 canAttack = false;
                 attack_Timer = 0f;
                 Instantiate(player_Bullet, AttackPoint.position, Quaternion.identity);
+                Instantiate(player_Bullet, AttackPoint2.position, Quaternion.identity);
             }
                     
         }
