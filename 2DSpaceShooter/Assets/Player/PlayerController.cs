@@ -103,10 +103,10 @@ public class PlayerController : MonoBehaviour
 
     void ActivateGameObject()
     {
-        // Activate the current game object
+        
         gameObjects[currentIndex].SetActive(!gameObjects[currentIndex].activeSelf);
 
-        // Increment the index or reset to 0 if it exceeds the array length
+        
         currentIndex = (currentIndex + 1) % gameObjects.Length;
     }
 }

@@ -21,10 +21,7 @@ public class Shoot : MonoBehaviour
     void Update()
     {
         Move();
-        /*if (transform.position.x >= Screen.width) 
-        {
-            Explode();
-        }*/
+        
 
     }
 
@@ -41,7 +38,7 @@ public class Shoot : MonoBehaviour
     }
     void Explode()
     {
-        // Instantiate the explosion prefab at the bullet's position
+        
         Instantiate(explosion, transform.position, Quaternion.identity);
     }
 
