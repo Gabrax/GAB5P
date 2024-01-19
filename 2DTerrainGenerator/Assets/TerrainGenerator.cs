@@ -11,9 +11,9 @@ public class TerrainGenerator : MonoBehaviour
     public Color clearingColor = Color.yellow;
 
     // Linear mixed generator parameters
-    private const long m = 1 << 20; 
+    private const long m = 1 << 22; 
     private const long a = 48271;    
-    private float c = ((3 - (Mathf.Sqrt(3)) / 6)) * m;
+    private float c = Mathf.Round(((3 - (Mathf.Sqrt(3))) / 6) * m);
 
     public TMP_Text displayText;
     public TMP_InputField inputField;
@@ -41,14 +41,14 @@ public class TerrainGenerator : MonoBehaviour
         {
             for (int y = 0; y < boardSize; y++)
             {
-                seed = (a * seed + c) % m; 
+                seed = (a * seed + c) % m;
 
-                float randomValue = (float)seed / m; 
+                float randomValue = (float)seed / m;
 
-                
+
                 if (randomValue < 0.25f)
                     terrainColors[x, y] = waterColor;
-                else if (randomValue < 0.5f)
+                else if (randomValue > 0.25f && randomValue < 0.5f)
                     terrainColors[x, y] = forestColor;
                 else if (randomValue < 0.75f)
                     terrainColors[x, y] = mountainColor;
