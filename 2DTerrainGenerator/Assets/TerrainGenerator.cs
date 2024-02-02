@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TerrainGenerator : MonoBehaviour
 {
@@ -10,20 +9,20 @@ public class TerrainGenerator : MonoBehaviour
     public Color mountainColor = Color.red;
     public Color clearingColor = Color.yellow;
 
-    // Linear mixed generator parameters
-    private const long m = 1 << 22; 
-    private const long a = 48271;    
-    private float c = Mathf.Round(((3 - (Mathf.Sqrt(3))) / 6) * m);
+    
+    const long m = 4194304; 
+    const long a = 20481; 
+    float c = Mathf.Round(((3 - (Mathf.Sqrt(3))) / 6) * m); //886361
+    float seed = 42;
 
     public TMP_Text displayText;
     public TMP_InputField inputField;
-    public float seed = 123; 
 
     void Start()
     {
         GenerateTerrain();
     }
-
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
@@ -45,29 +44,27 @@ public class TerrainGenerator : MonoBehaviour
 
                 float randomValue = (float)seed / m;
 
-
                 if (randomValue < 0.25f)
                     terrainColors[x, y] = waterColor;
-                else if (randomValue > 0.25f && randomValue < 0.5f)
+                else if (randomValue < 0.5f)
                     terrainColors[x, y] = forestColor;
                 else if (randomValue < 0.75f)
                     terrainColors[x, y] = mountainColor;
                 else
                     terrainColors[x, y] = clearingColor;
 
-                
                 GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Quad);
                 tile.transform.position = new Vector3(x, y, 0);
                 tile.GetComponent<Renderer>().material.color = terrainColors[x, y];
             }
         }
     }
+
     public void UpdateVariable()
     {
-        
         if (int.TryParse(inputField.text, out int newValue))
         {
-            seed = newValue;
+            seed = (uint)newValue;
             UpdateDisplay();
         }
         else
@@ -75,10 +72,9 @@ public class TerrainGenerator : MonoBehaviour
             Debug.LogError("Invalid input. Please enter a valid integer.");
         }
     }
+
     void UpdateDisplay()
     {
         displayText.text = "myVariable: " + seed.ToString();
     }
-
-    
 }
