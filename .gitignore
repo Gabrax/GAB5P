@@ -70,3 +70,21 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Zig build artifacts
+zig-out/
+build.zig.lock
+
+# Zig cache files
+.cache/
+
+# IDE or editor files (add/remove based on your editor)
+.vscode/
+.idea/
+
+# OS-specific files (e.g., macOS, Windows)
+.DS_Store
+Thumbs.db
+
+# Zig system-specific files
+*.zig.cache/
