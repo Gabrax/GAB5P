@@ -88,3 +88,5 @@ Thumbs.db
 
 # Zig system-specific files
 *.zig.cache/
+
+.venv/
